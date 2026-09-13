@@ -1,0 +1,22 @@
+name: Generate Cosign Keys
+on: workflow_dispatch # Erlaubt das manuelle Starten per Knopfdruck
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3.5.0
+
+      - name: Generate key pair
+        run: |
+          # Generiert ein Schlüsselpaar ohne Passwort (wichtig für BlueBuild)
+          cosign generate-key-pair
+          
+          echo "=== HIER STARTET DER ÖFFENTLICHE SCHLÜSSEL (cosign.pub) ==="
+          cat cosign.pub
+          echo "=== ENDE ÖFFENTLICHER SCHLÜSSEL ==="
+          
+          echo "=== HIER STARTET DER PRIVATE SCHLÜSSEL (cosign.key) ==="
+          cat cosign.key
+          echo "=== ENDE PRIVATER SCHLÜSSEL ==="

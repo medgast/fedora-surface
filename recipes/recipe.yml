@@ -14,7 +14,7 @@ image-version: latest # You can pin to a specific version of Fedora as well
 modules:
   - type: files
     files:
-      - source: https://surfacelinux.com
+      - source: https://pkg.surfacelinux.com
         destination: /etc/yum.repos.d/linux-surface.repo
 
   - type: rpm-ostree

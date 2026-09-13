@@ -1,48 +1,36 @@
----
-# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
-# image will be published to ghcr.io/<user>/<name>
+# yaml-language-server: $schema=https://blue-build.org
 name: surface-silverblue44
-# description will be included in the image's metadata
-description: Fedora Silverblue 44 mit Linux Surface 43 Kernel
+description: Fedora Silverblue 44 mit Linux Surface Kernel
 
-# the base image to build on top of (FROM) and the version tag to use
 base-image: ghcr.io/ublue-os/silverblue-main
-image-version: latest # You can pin to a specific version of Fedora as well
+image-version: latest
 
-# module configuration, executed in order
-# you can include multiple instances of the same module
 modules:
-  - type: files
-    files:
-      - source: https://pkg.surfacelinux.com
-        destination: /etc/yum.repos.d/linux-surface.repo
-
+  # Das rpm-ostree Modul übernimmt nun das Einbinden UND Installieren
   - type: rpm-ostree
     repos:
       - copr:atim/starship
+    # Hier laden wir die Repo-Datei sicher während des Build-Vorgangs herunter:
+    init:
+      - curl -sLo /etc/yum.repos.d/linux-surface.repo https://surfacelinux.com
     install:
-        - micro
-        - starship
-        - kernel-surface
-        - surface-secureboot-mok
-        - iptsd
+      - micro
+      - starship
+      - kernel-surface
+      - surface-secureboot-mok
+      - iptsd
+      - libwacom-surface
+      - surface-control
     remove:
-        # example: removing firefox (in favor of the flatpak)
-        # "firefox" is the main package, "firefox-langpacks" is a dependency
-        - firefox
-        - firefox-langpacks # also remove firefox dependency (not required for all packages, this is a special case)
-        - kernel
-        - kernel-core
-        - kernel-modules
-        - kernel-modules-extra
+      - firefox
+      - firefox-langpacks
 
   - type: default-flatpaks
     configurations:
-      - notify: true # Send notification after install/uninstall is finished (true/false)
+      - notify: true
         scope: system
-        # If no repo information is specified, Flathub will be used by default
-        install: # system flatpaks we want all users to have and not remove
+        install:
           - org.mozilla.firefox
-      - scope: user # Also add Flathub user repo, but no user packages
+      - scope: user
 
-  - type: signing # this sets up the proper policy & signing files for signed images to work fully
+  - type: signing

@@ -22,7 +22,8 @@ modules:
       copr:
         - atim/starship
       files:
-        - url: https://surfacelinux.com
+        - source: https://surfacelinux.com
+          destination: /etc/yum.repos.d/surfacelinux.repo
     install:
       packages:
         - micro

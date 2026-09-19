@@ -7,6 +7,10 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
 modules:
+  # 1. Schritt: Repository-Datei via Skript herunterladen
+  - type: script
+    inline: |
+      curl -sLo /etc/yum.repos.d/linux-surface.repo https://surfacelinux.com
   # Das rpm-ostree Modul übernimmt nun das Einbinden UND Installieren
   - type: rpm-ostree
     repos:
@@ -20,7 +24,7 @@ modules:
       - kernel-surface
       - surface-secureboot-mok
       - iptsd
-      - libwacom-surface
+      #- libwacom-surface
       - surface-control
     remove:
       - firefox

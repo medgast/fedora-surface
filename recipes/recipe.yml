@@ -7,12 +7,13 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
 modules:
-      # 1. Schritt: Repository-Datei via Skript herunterladen
+      # 1. Schritt: Repository und GPG-Key für Linux-Surface hinzufügen
       - type: script
         snippets:
           - "curl -sLo /etc/yum.repos.d/linux-surface.repo https://surfacelinux.com"
+          - "rpm --import https://surfacelinux.com"
 
-      # 2. Schritt: Pakete installieren (Der "init"-Block wurde hier entfernt)
+      # 2. Schritt: Pakete installieren
       - type: rpm-ostree
         repos:
           - copr:atim/starship

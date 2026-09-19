@@ -7,35 +7,22 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
 modules:
-  # 1. Schritt: Repository-Datei via Skript herunterladen
-  - type: script
-    inline: |
-      curl -sLo /etc/yum.repos.d/linux-surface.repo https://surfacelinux.com
-  # Das rpm-ostree Modul übernimmt nun das Einbinden UND Installieren
-  - type: rpm-ostree
-    repos:
-      - copr:atim/starship
-    # Hier laden wir die Repo-Datei sicher während des Build-Vorgangs herunter:
-    init:
-      - curl -sLo /etc/yum.repos.d/linux-surface.repo https://surfacelinux.com
-    install:
-      - micro
-      - starship
-      - kernel-surface
-      - surface-secureboot-mok
-      - iptsd
-      #- libwacom-surface
-      - surface-control
-    remove:
-      - firefox
-      - firefox-langpacks
+      # 1. Schritt: Repository-Datei via Skript herunterladen
+      - type: script
+        snippets:
+          - "curl -sLo /etc/yum.repos.d/linux-surface.repo https://surfacelinux.com"
 
-  - type: default-flatpaks
-    configurations:
-      - notify: true
-        scope: system
+      # 2. Schritt: Pakete installieren (Der "init"-Block wurde hier entfernt)
+      - type: rpm-ostree
+        repos:
+          - copr:atim/starship
         install:
-          - org.mozilla.firefox
-      - scope: user
-
-  - type: signing
+          - micro
+          - starship
+          - kernel-surface
+          - surface-secureboot-mok
+          - iptsd
+          - surface-control
+        remove:
+          - firefox
+          - firefox-langpacks

@@ -7,11 +7,11 @@ base-image: ghcr.io/ublue-os/silverblue-main
 image-version: latest
 
 modules:
-  # 1. Schritt: Pakete installieren, entfernen und das Linux-Surface Repo einbinden
+  # 1. Schritt: Pakete installieren, entfernen und das KORREKTE Linux-Surface Repo einbinden
   - type: rpm-ostree
     repos:
       - copr:atim/starship
-      # Das offizielle linux-surface Repository für Fedora wird hier sicher geladen
+      # WICHTIG: Hier muss die direkte URL zur .repo-Datei eingetragen sein!
       - https://surfacelinux.com
     install:
       - micro
@@ -23,12 +23,12 @@ modules:
       - firefox
       - firefox-langpacks
 
-  # 2. Schritt: Den Fedora-Standardkernel sicher durch den Surface-Kernel ersetzen
-  # Das verhindert Paketkonflikte während des GitHub-Builds.
+  # 2. Schritt: Den Fedora-Standardkernel durch den Surface-Kernel ersetzen
+  # Dies verhindert Paketkonflikte während des GitHub-Builds.
   - type: script
     snippets:
       - "rpm-ostree override replace --experimental --from repo=linux-surface kernel kernel-core kernel-modules kernel-modules-extra"
 
-  # 3. Schritt: Das Initramfs für den neuen Kernel neu generieren
+  # 3. Schritt: Das Initramfs für den neuen Kernel generieren
   # Zwingend erforderlich, damit Touchscreen- und Tastaturtreiber beim Booten geladen werden.
   - type: initramfs

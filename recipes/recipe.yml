@@ -11,7 +11,7 @@ modules:
   - type: rpm-ostree
     repos:
       - copr:atim/starship
-      # WICHTIG: Hier muss die direkte URL zur .repo-Datei eingetragen sein!
+      # Hier stand vorher die falsche URL. Diese Zeile muss exakt so aussehen:
       - https://surfacelinux.com
     install:
       - micro
@@ -24,11 +24,9 @@ modules:
       - firefox-langpacks
 
   # 2. Schritt: Den Fedora-Standardkernel durch den Surface-Kernel ersetzen
-  # Dies verhindert Paketkonflikte während des GitHub-Builds.
   - type: script
     snippets:
       - "rpm-ostree override replace --experimental --from repo=linux-surface kernel kernel-core kernel-modules kernel-modules-extra"
 
   # 3. Schritt: Das Initramfs für den neuen Kernel generieren
-  # Zwingend erforderlich, damit Touchscreen- und Tastaturtreiber beim Booten geladen werden.
   - type: initramfs

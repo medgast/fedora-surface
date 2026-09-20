@@ -1,32 +1,39 @@
----
-# yaml-language-server: $schema=https://blue-build.org
-name: surface-silverblue44
-description: Fedora Silverblue 44 mit Linux Surface Kernel
+# https://blue-build.org/reference/recipe/
+version: 1
+name: fedora-silverblue-surface
+description: Ein angepasstes Fedora Silverblue Image für Microsoft Surface Geräte mit integriertem linux-surface Kernel.
 
-base-image: ghcr.io/ublue-os/silverblue-main
-image-version: latest
+base-image: ghcr.io/fedora-atomic/silverblue
+image-version: 40 # Oder '41' / 'latest', je nachdem welche Fedora-Version gewünscht ist
+
+transient:
+  - /tmp
 
 modules:
-  # 1. Schritt: Pakete installieren, entfernen und das KORREKTE Linux-Surface Repo einbinden
+  # 1. Das linux-surface DNF Repository hinzufügen
+  - type: repo
+    repositories:
+      - fedora-surface: https://pkg.surfacelinux.com/fedora/linux-surface.repo
+
+  # 2. Den Standard-Kernel durch den linux-surface Kernel ersetzen
+  # Sowie notwendige Treiber und Daemons für Touch/Stift installieren
   - type: rpm-ostree
-    repos:
-      - copr:atim/starship
-      # Hier stand vorher die falsche URL. Diese Zeile muss exakt so aussehen:
-      - https://surfacelinux.com
-    install:
-      - micro
-      - starship
-      - surface-secureboot-mok
-      - iptsd
-      - surface-control
+    repositories:
+      - fedora-surface
     remove:
-      - firefox
-      - firefox-langpacks
+      - kernel
+      - kernel-core
+      - kernel-modules
+      - kernel-modules-extra
+    install:
+      - kernel-surface
+      - kernel-surface-devel
+      - iptsd                   # Wichtig für Touchscreen-Unterstützung
+      - libwacom-surface        # Angepasste Tablet-Konfigurationen
+      - surface-secureboot      # Optional, falls Secure Boot aktiv bleiben soll
 
-  # 2. Schritt: Den Fedora-Standardkernel durch den Surface-Kernel ersetzen
-  - type: script
-    snippets:
-      - "rpm-ostree override replace --experimental --from repo=linux-surface kernel kernel-core kernel-modules kernel-modules-extra"
-
-  # 3. Schritt: Das Initramfs für den neuen Kernel generieren
-  - type: initramfs
+  # 3. Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
+  - type: systemd
+    system:
+      enabled:
+        - iptsd.service

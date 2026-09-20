@@ -1,25 +1,16 @@
-# https://blue-build.org/reference/recipe/
 version: 1
 name: fedora-silverblue-surface
-description: Ein angepasstes Fedora Silverblue Image für Microsoft Surface Geräte mit integriertem linux-surface Kernel.
+description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
 
-base-image: ghcr.io/fedora-atomic/silverblue
-image-version: 40 # Oder '41' / 'latest', je nachdem welche Fedora-Version gewünscht ist
-
-transient:
-  - /tmp
+base-image: ghcr.io/blue-build/base-images/fedora-silverblue
+image-version: 41
 
 modules:
-  # 1. Das linux-surface DNF Repository hinzufügen
-  - type: repo
-    repositories:
-      - fedora-surface: https://pkg.surfacelinux.com/fedora/linux-surface.repo
-
-  # 2. Den Standard-Kernel durch den linux-surface Kernel ersetzen
-  # Sowie notwendige Treiber und Daemons für Touch/Stift installieren
-  - type: rpm-ostree
-    repositories:
-      - fedora-surface
+  # Treiber und linux-surface Repositories einbinden sowie Kernel austauschen
+  - type: dnf
+    repos:
+      files:
+        - https://pkg.surfacelinux.com/fedora/linux-surface.repo
     remove:
       - kernel
       - kernel-core
@@ -28,11 +19,11 @@ modules:
     install:
       - kernel-surface
       - kernel-surface-devel
-      - iptsd                   # Wichtig für Touchscreen-Unterstützung
+      - iptsd                   # Wichtig fuer Touchscreen-Unterstuetzung
       - libwacom-surface        # Angepasste Tablet-Konfigurationen
-      - surface-secureboot      # Optional, falls Secure Boot aktiv bleiben soll
+      - surface-secureboot      # Importiert MOK-Keys fuer Secure Boot beim ersten Start
 
-  # 3. Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
+  # Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
   - type: systemd
     system:
       enabled:

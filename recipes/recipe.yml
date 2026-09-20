@@ -1,9 +1,20 @@
 # yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
+
 version: 1
+
 name: fedora-silverblue-surface
-description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
 
-base-image: ghcr.io/blue-build/base-images/fedora-silverblue
-image-version: 44
+description: Ein angepasstes Fedora-Silverblue-Image für Microsoft-Surface-Geräte mit integriertem linux-surface-Kernel.
 
+base-image: ghcr.io/ublue-os/silverblue
+image-version: 43
 
+modules:
+  - type: dnf
+    repos:
+      files:
+        - https://pkg.surfacelinux.com/fedora/linux-surface.repo
+    install:
+      packages:
+        - kernel-surface
+        - iptsd

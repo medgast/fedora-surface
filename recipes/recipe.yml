@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 version: 1
 name: fedora-silverblue-surface
 description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
@@ -6,24 +7,36 @@ base-image: ghcr.io/blue-build/base-images/fedora-silverblue
 image-version: 41
 
 modules:
-  # 1. Haupt-Kernel auf linux-surface umstellen
-  - type: akmods
-    base: surface
-    install:
-      packages: [] # Muss laut Schema definiert sein, bleibt aber leer da 'base' den Kernel regelt
-
-  # 2. Zusaetzliche Surface-Tools ueber das dnf-Modul installieren
+  # 1. Das linux-surface Repository einbinden
   - type: dnf
     repos:
       files:
         - https://surfacelinux.com
+
+  # 2. Kernel-Austausch direkt per Skript-Befehl fehlerfrei ausfuehren
+  - type: script
+    snippets:
+      - |
+        echo "Tausche Standard-Kernel gegen linux-surface Kernel aus..."
+        rpm-ostree override replace \
+          --experimental \
+          --from repo=fedora-surface \
+          kernel \
+          kernel-core \
+          kernel-modules \
+          kernel-modules-extra \
+          kernel-surface \
+          kernel-surface-devel
+
+  # 3. Zusaetzliche Surface-Hilfspakete installieren
+  - type: dnf
     install:
       packages:
         - iptsd                   # Wichtig fuer Touchscreen-Unterstuetzung
         - libwacom-surface        # Angepasste Tablet-Konfigurationen
         - surface-secureboot      # Importiert MOK-Keys fuer Secure Boot beim ersten Start
 
-  # 3. Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
+  # 4. Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
   - type: systemd
     system:
       enabled:

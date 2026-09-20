@@ -1,4 +1,3 @@
-# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 version: 1
 name: fedora-silverblue-surface
 description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
@@ -8,8 +7,10 @@ image-version: 41
 
 modules:
   # 1. Haupt-Kernel auf linux-surface umstellen
-  - type: kernel-akmods
+  - type: akmods
     base: surface
+    install:
+      packages: [] # Muss laut Schema definiert sein, bleibt aber leer da 'base' den Kernel regelt
 
   # 2. Zusaetzliche Surface-Tools ueber das dnf-Modul installieren
   - type: dnf

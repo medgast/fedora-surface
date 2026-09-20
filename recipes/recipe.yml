@@ -4,18 +4,18 @@ name: fedora-silverblue-surface
 description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
 
 base-image: ghcr.io/blue-build/base-images/fedora-silverblue
-image-version: latest
+image-version: 41
 
 modules:
-  # 1. Kernel auf linux-surface umstellen
-  - type: akmods
+  # 1. Haupt-Kernel auf linux-surface umstellen
+  - type: kernel-akmods
     base: surface
 
   # 2. Zusaetzliche Surface-Tools ueber das dnf-Modul installieren
   - type: dnf
     repos:
       files:
-        - https://pkg.surfacelinux.com/fedora/linux-surface.repo
+        - https://surfacelinux.com
     install:
       packages:
         - iptsd                   # Wichtig fuer Touchscreen-Unterstuetzung

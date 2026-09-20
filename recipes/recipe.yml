@@ -7,26 +7,22 @@ base-image: ghcr.io/blue-build/base-images/fedora-silverblue
 image-version: latest
 
 modules:
-  # Treiber und linux-surface Repositories einbinden sowie Kernel austauschen
+  # 1. Kernel auf linux-surface umstellen
+  - type: akmods
+    base: surface
+
+  # 2. Zusaetzliche Surface-Tools ueber das dnf-Modul installieren
   - type: dnf
     repos:
       files:
         - https://pkg.surfacelinux.com/fedora/linux-surface.repo
-    remove:
-      packages:
-        - kernel
-        - kernel-core
-        - kernel-modules
-        - kernel-modules-extra
     install:
       packages:
-        - kernel-surface
-        - kernel-surface-devel
         - iptsd                   # Wichtig fuer Touchscreen-Unterstuetzung
         - libwacom-surface        # Angepasste Tablet-Konfigurationen
         - surface-secureboot      # Importiert MOK-Keys fuer Secure Boot beim ersten Start
 
-  # Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
+  # 3. Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
   - type: systemd
     system:
       enabled:

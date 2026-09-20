@@ -4,7 +4,7 @@ name: fedora-silverblue-surface
 description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
 
 base-image: ghcr.io/blue-build/base-images/fedora-silverblue
-image-version: 41
+image-version: latest
 
 modules:
   # Treiber und linux-surface Repositories einbinden sowie Kernel austauschen

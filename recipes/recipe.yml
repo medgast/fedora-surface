@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://schema.blue-build.org/recipe-v1.json
 version: 1
 name: fedora-silverblue-surface
 description: Ein angepasstes Fedora Silverblue Image fuer Microsoft Surface Geraete mit integriertem linux-surface Kernel.
@@ -12,16 +13,18 @@ modules:
       files:
         - https://pkg.surfacelinux.com/fedora/linux-surface.repo
     remove:
-      - kernel
-      - kernel-core
-      - kernel-modules
-      - kernel-modules-extra
+      packages:
+        - kernel
+        - kernel-core
+        - kernel-modules
+        - kernel-modules-extra
     install:
-      - kernel-surface
-      - kernel-surface-devel
-      - iptsd                   # Wichtig fuer Touchscreen-Unterstuetzung
-      - libwacom-surface        # Angepasste Tablet-Konfigurationen
-      - surface-secureboot      # Importiert MOK-Keys fuer Secure Boot beim ersten Start
+      packages:
+        - kernel-surface
+        - kernel-surface-devel
+        - iptsd                   # Wichtig fuer Touchscreen-Unterstuetzung
+        - libwacom-surface        # Angepasste Tablet-Konfigurationen
+        - surface-secureboot      # Importiert MOK-Keys fuer Secure Boot beim ersten Start
 
   # Den iptsd Touchscreen-Daemon beim Systemstart aktivieren
   - type: systemd

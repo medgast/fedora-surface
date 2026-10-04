@@ -12,6 +12,17 @@ image-version: 44
 modules:
   - type: dnf
     repos:
+      - |
+        [linux-surface]
+        name=linux-surface
+        baseurl=https://pkg.surfacelinux.com/fedora/f43/
+        enabled=1
+        skip_if_unavailable=1
+        gpgkey=https://raw.githubusercontent.com/linux-surface/linux-surface/master/pkg/keys/surface.asc
+        gpgcheck=1
+        enabled_metadata=1
+        type=rpm-md
+        repo_gpgcheck=0
       files:
         - linux-surface.repo
     install:
@@ -21,3 +32,4 @@ modules:
     remove:
       packages:
         - firefox
+        - firefox-langpacks

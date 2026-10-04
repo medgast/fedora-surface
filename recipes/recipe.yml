@@ -13,7 +13,7 @@ modules:
   - type: dnf
     repos:
       files:
-        - https://pkg.surfacelinux.com/fedora/linux-surface.repo
+        - config/linux-surface.repo
     install:
       packages:
         - kernel-surface

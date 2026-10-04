@@ -6,7 +6,7 @@ name: fedora-silverblue-surface
 
 description: Ein angepasstes Fedora-Silverblue-Image für Microsoft-Surface-Geräte mit linux-surface-Kernel.
 
-base-image: ghcr.io/ublue-os/silverblue
+base-image: ghcr.io/ublue-os/silverblue-main
 image-version: 44
 
 modules:

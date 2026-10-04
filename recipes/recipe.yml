@@ -23,8 +23,6 @@ modules:
         enabled_metadata=1
         type=rpm-md
         repo_gpgcheck=0
-      files:
-        - linux-surface.repo
     install:
       packages:
         - kernel-surface

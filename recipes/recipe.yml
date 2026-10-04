@@ -13,7 +13,7 @@ modules:
   - type: dnf
     repos:
       files:
-        - config/linux-surface.repo
+        - linux-surface.repo
     install:
       packages:
         - kernel-surface

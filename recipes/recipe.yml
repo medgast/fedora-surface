@@ -2,7 +2,7 @@
 
 version: 1
 
-name: fedora-silverblue-surface
+name: fedora-silverblue-surface_44
 
 description: Ein angepasstes Fedora-Silverblue-Image für Microsoft-Surface-Geräte mit linux-surface-Kernel.
 

@@ -18,6 +18,7 @@ modules:
       packages:
         - kernel-surface
         - iptsd
+        - libwacom-surface
     remove:
       packages:
         - firefox

@@ -14,12 +14,12 @@ modules:
     repos:
       files:
         - linux-surface.repo
-    remove:
-      packages:
-        - libwacom
-        - libwacom-data
+#    remove:
+#      packages:
+#        - libwacom
+#        - libwacom-data
     install:
       packages:
         - kernel-surface
         - iptsd
-        - libwacom-surface
+#        - libwacom-surface

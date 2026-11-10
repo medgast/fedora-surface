@@ -14,11 +14,11 @@ modules:
     repos:
       files:
         - linux-surface.repo
+    remove:
+      packages:
+        -libwacom
     install:
       packages:
         - kernel-surface
         - iptsd
         - libwacom-surface
-    #remove:
-    #  packages:
-    #    - firefox

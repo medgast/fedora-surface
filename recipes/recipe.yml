@@ -17,6 +17,7 @@ modules:
     remove:
       packages:
         - libwacom
+        - libwacom-data
     install:
       packages:
         - kernel-surface

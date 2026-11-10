@@ -16,7 +16,7 @@ modules:
         - linux-surface.repo
     remove:
       packages:
-        -libwacom
+        - libwacom
     install:
       packages:
         - kernel-surface

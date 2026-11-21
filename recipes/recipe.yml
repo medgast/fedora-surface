@@ -24,4 +24,4 @@ modules:
         - iptsd
         - libwacom-surface
         - libwacom-surface-data
-        - libwacom-surface-utils
+#        - libwacom-surface-utils

@@ -18,8 +18,7 @@ modules:
       packages:
         - kernel-surface
         - iptsd
-    replace:
-      - from-repo: linux-surface
-        packages:
+        - allow-erasing: true
+          packages:
             - libwacom-surface
             - libwacom-surface-data

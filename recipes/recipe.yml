@@ -17,12 +17,11 @@ modules:
     install:
       packages:
         - kernel-surface
-        - iptsd
-
-  - type: rpm-ostree
-    overrides:
-      replace:
-        - fromRepository: linux-surface
+        - ipts
+    replace:
+      - from-repo: linux-surface
           packages:
-            - libwacom-surface
-            - libwacom-surface-data
+            - old: libwacom
+              new: libwacom-surface
+            - old: libwacom-data
+              new: libwacom-surface-data

@@ -17,7 +17,7 @@ modules:
     install:
       packages:
         - kernel-surface
-        - ipts
+        - iptsd
     replace:
       - from-repo: linux-surface
         packages:

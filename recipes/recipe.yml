@@ -20,8 +20,6 @@ modules:
         - ipts
     replace:
       - from-repo: linux-surface
-          packages:
-            - old: libwacom
-              new: libwacom-surface
-            - old: libwacom-data
-              new: libwacom-surface-data
+        packages:
+            - libwacom-surface
+            - libwacom-surface-data

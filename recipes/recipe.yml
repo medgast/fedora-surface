@@ -14,14 +14,15 @@ modules:
     repos:
       files:
         - linux-surface.repo
-    remove:
-      packages:
-        - libwacom
-        - libwacom-data
     install:
       packages:
         - kernel-surface
         - iptsd
-        - libwacom-surface
-        - libwacom-surface-data
-#        - libwacom-surface-utils
+
+  - type: rpm-ostree
+    overrides:
+      replace:
+        - fromRepository: linux-surface
+          packages:
+            - libwacom-surface
+            - libwacom-surface-data

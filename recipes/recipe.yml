@@ -14,11 +14,11 @@ modules:
     repos:
       files:
         - linux-surface.repo
-    install:
-      packages:
-        - kernel-surface
-        - iptsd
-        - allow-erasing: true
-          packages:
-            - libwacom-surface
-            - libwacom-surface-data
+    replace:
+      - from-repo: linux-surface
+        allow-erasing: true
+        packages:
+          - old: libwacom
+            new: libwacom-surface
+          - old: libwacom-date
+            new: libwacom-surface-data

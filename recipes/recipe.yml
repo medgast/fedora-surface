@@ -14,6 +14,10 @@ modules:
     repos:
       files:
         - linux-surface.repo
+    install:
+      packages:
+        - kernel-surface
+        - iptsd
     replace:
       - from-repo: linux-surface
         allow-erasing: true
